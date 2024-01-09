@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import '../css/menu.css';
 import MainScreen from './MainScreen';
+import Sign_up_page from './sign_up_page';
 
 const prop_username = 'relegatedleader';
 const prop_password = 'password';
@@ -10,7 +11,7 @@ export default function Menu() {
   const [curr_username, set_curr_username] = useState('');
   const [curr_password, set_curr_password] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
-
+  const [newUser, setNewUser] = useState(false);
   const validate_password = () => {
     if (curr_username === prop_username && curr_password === prop_password) {
       setLoggedIn(true);
@@ -23,12 +24,19 @@ export default function Menu() {
   if (loggedIn) {
     return <MainScreen />;
   }
+  const new_user_validation = () => {
+    setNewUser(true);
+  };
+
+  if (newUser) {
+    return <Sign_up_page />;
+  }
 
   return (
     <div className='menu-container'>
       <div className='container'>
         <img
-          src='img/fallestial_logo_1.png'
+          src='img\fallestrial_without_background_logo.png'
           alt='Fallestrial Logo'
           id='fallestrial_logo'
         />
@@ -58,7 +66,10 @@ export default function Menu() {
           </button>
           <br />
           <p>
-            New to Fallestrial? <a href='#'>Sign Up</a>
+            New to Fallestrial?{' '}
+            <a href='#' onClick={new_user_validation}>
+              Sign Up
+            </a>
           </p>
         </form>
       </div>
