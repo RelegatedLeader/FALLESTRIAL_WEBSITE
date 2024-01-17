@@ -1,8 +1,9 @@
-// Menu.js
+// Menu.jsx
 import React, { useState } from 'react';
+import { Link, useNavigate, Routes, Route } from 'react-router-dom';
 import '../css/menu.css';
 import MainScreen from './MainScreen';
-import Sign_up_page from './sign_up_page';
+import Sign_up_page from './Sign_up_page';
 
 const prop_username = 'relegatedleader';
 const prop_password = 'password';
@@ -12,10 +13,13 @@ export default function Menu() {
   const [curr_password, set_curr_password] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [newUser, setNewUser] = useState(false);
+  const navigate = useNavigate();
+
   const validate_password = () => {
     if (curr_username === prop_username && curr_password === prop_password) {
       setLoggedIn(true);
       alert('Login successful!');
+      navigate('/main-screen');
     } else {
       alert('Invalid username or password');
     }
@@ -24,6 +28,7 @@ export default function Menu() {
   if (loggedIn) {
     return <MainScreen />;
   }
+
   const new_user_validation = () => {
     setNewUser(true);
   };
@@ -67,12 +72,16 @@ export default function Menu() {
           <br />
           <p>
             New to Fallestrial?{' '}
-            <a href='#' onClick={new_user_validation}>
+            <Link to='/sign-up' onClick={new_user_validation}>
               Sign Up
-            </a>
+            </Link>
           </p>
         </form>
       </div>
+      <Routes>
+        <Route path='/main-screen' element={<MainScreen />} />
+        <Route path='/sign-up' element={<Sign_up_page />} />
+      </Routes>
     </div>
   );
 }
